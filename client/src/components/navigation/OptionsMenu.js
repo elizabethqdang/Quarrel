@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { ApolloConsumer, Mutation } from "react-apollo";
+import { ApolloConsumer, Query, Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
 import axios from "axios";
@@ -16,7 +16,7 @@ class OptionsMenu extends React.Component {
         this.logout = this.logout.bind(this);
         this.colorOptions = this.colorOptions.bind(this);
     }
-
+    
     handleFile(updateProfilePic) {
         return e => {
             this.setState({ file: e.target.files[0] }, () => {
@@ -53,9 +53,9 @@ class OptionsMenu extends React.Component {
                 query: CURRENT_USER,
                 variables: { token: localStorage.getItem("auth-token") }
             }).currentUser
-        } catch (err) {
+        } catch(err) {
             console.log(err);
-        }
+        } 
         if (user) {
             let newUser = Object.assign({}, user);
             newUser.profileUrl = data.updateProfileUrl.profileUrl;
@@ -94,8 +94,8 @@ class OptionsMenu extends React.Component {
         ]
 
         return colors.map((color, i) => (
-            <li style={{ color: color }}
-                key={i}
+            <li style={{color: color}}
+                key={i} 
                 onClick={this.updateColor(updateProfilePic, color)}>
                 {color}
             </li>
@@ -106,25 +106,25 @@ class OptionsMenu extends React.Component {
         return (
             <ApolloConsumer>
                 {client => {
-                    return <Mutation
+                    return <Mutation 
                         mutation={UPDATE_PROFILE_PIC}
-                        onCompleted={data => {
+                        onCompleted={ data => {
                             this.props.closeOptions();
                         }}
                         update={(cache, data) => this.updateCache(cache, data)}
-                    >
+                        >
                         {updateProfilePic => {
                             return <React.Fragment>
                                 <label htmlFor="format-file">Upload Picture</label>
                                 <hr></hr>
                                 <input id="format-file" type="file" onChange={this.handleFile(updateProfilePic)} />
-                                {this.colorOptions(updateProfilePic)}
+                                    {this.colorOptions(updateProfilePic)}
                                 <hr></hr>
                                 <li onClick={this.logout(client)}>Logout</li>
                             </React.Fragment>
                         }}
-                    </Mutation>
-                }}
+                </Mutation>
+            }}
             </ApolloConsumer>
         )
     }

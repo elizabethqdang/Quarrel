@@ -28,18 +28,6 @@
     color: #329bff;
 }
 
-.upvoted-arrow {
-    animation: upvoted .1s forwards;
-}
-
-@keyframes upvoted {
-    0% { font-size: 15px }
-    50% { font-size: 16px }
-    70% { font-size: 17px }
-    95% { font-size: 18px }
-    100% { font-size: 15px }
-}
-
 .upvoted-message {
     display: flex;
     align-items: center;
@@ -51,17 +39,4 @@
 
 .upvoted-message-text {
 
-}
-
-.disabled-upvote-container {
-    display: flex;
-    color: rgb(172, 172, 172);
-    width: 122px;
-    height: 30px;
-    border-radius: 20px;
-    justify-content: space-evenly;
-    align-items: center;
-    font-size: 15px;
-    margin-bottom: 2px;
-    cursor: auto;
 }

@@ -7,17 +7,17 @@ module.exports = function  validateRegisterInput(data) {
     data.email = validText(data.email) ? data.email : "";
     data.password = validText(data.password) ? data.password : "";
 
-    if (Validator.isEmpty(data.fname)) {
+    if (Validator.isEmpty(data.fname) && Validator.isEmpty(data.lname)) {
         return { message: "Please use your full name", isValid: false };
-		}
+    }
 		
-		if (Validator.isEmpty(data.lname)) {
-			return { message: "Please use your full name", isValid: false };
+		if (!Validator.isLength(data.fname, { min: 2 })) {
+			return { message: "", isValid: false };
 		}
 
-		// if (!Validator.isLength(data.fname, { min: 2 })) {
-		// 	return { message: "", isValid: false };
-		// }
+    if (Validator.isEmpty(data.lname)) {
+        return { message: "", isValid: false };
+    }
 
     // if (!Validator.isLength(data.email, { min: 4 })) {
     //     return { message: "", isValid: false }
@@ -29,11 +29,7 @@ module.exports = function  validateRegisterInput(data) {
 
     if (!Validator.isEmail(data.email)) {
         return { message: "The email address you entered is not valid.", isValid: false };
-		}
-		
-		if (Validator.isEmpty(data.email)) {
-			return { message: "Email field is required", isValid: false };
-		}
+    }
 
     if (Validator.isEmpty(data.password)) {
         return {

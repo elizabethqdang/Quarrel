@@ -86,18 +86,6 @@ export default {
             }
         }
     `,
-    ADD_TOPICS_TO_QUESTION: gql`
-        mutation AddTopicsToQuestion($topics: [ID!]!, $questionId: ID!) {
-            addTopicsToQuestion(topics: $topics, questionId: $questionId) {
-                _id
-                question
-                topics {
-                    _id
-                    name
-                }
-            }
-        }
-    `,
     NEW_ANSWER: gql`
         mutation NewAnswer($body: String!, $questionId: ID!) {
             newAnswer(body: $body, questionId: $questionId) {
@@ -246,14 +234,14 @@ export default {
             }
         }
 		`,
-    DELETE_COMMENT: gql`
+		DELETE_COMMENT: gql`
 				mutation DeleteComment($id: ID!) {
 						deleteComment(_id: $id) {
 								_id
 						}
 				}
 		`,
-    DISLIKE_COMMENT: gql`
+		DISLIKE_COMMENT: gql`
 				mutation DislikeComment($commentId: ID) {
 						dislikeComment(commentId: $commentId) {
 								_id
@@ -272,7 +260,7 @@ export default {
 						}
 				}	
 		`,
-    DELETE_DISLIKE: gql`
+		DELETE_DISLIKE: gql`
 				mutation DeleteDislike($commentId: ID) {
 					deleteDislike(commentId: $commentId) {
 						_id

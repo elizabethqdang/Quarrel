@@ -18,7 +18,7 @@ class MainFeedContainer extends React.Component {
         return (
             <div>
                 <QuestionForm div={true} closeSearchModal={this.closeModal}/>
-                <Feed noAnswerYet={false}/>
+                <Feed />
             </div>
             
         )

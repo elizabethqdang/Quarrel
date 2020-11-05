@@ -32,9 +32,9 @@ class QuestionForm extends React.Component {
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
         this.redirect = this.redirect.bind(this);
-        this.setDefaultCheck = this.setDefaultCheck.bind(this);
         this.handleTopicSubmit = this.handleTopicSubmit.bind(this);
         this.updateTopic = this.updateTopic.bind(this);
+        this.setDefaultCheck = this.setDefaultCheck.bind(this);
         this.handleTopicModal = this.handleTopicModal.bind(this);
     }
 
@@ -108,7 +108,7 @@ class QuestionForm extends React.Component {
             });
             setTimeout(this.closeMessage, 5001)
         } else if (link.length === 0 || Validator.isURL(link)) {
-            if (question[question.length - 1] !== "?") question = question + '?';
+            if (question[question.length-1] !== "?") question = question + '?';
             newQuestion({
                 variables: {
                     question: question,
@@ -167,11 +167,11 @@ class QuestionForm extends React.Component {
                             mutation={ADD_TOPIC_TO_QUESTION}
                             onError={err => this.setState({ message: err.message })}
                             onCompleted={data => {
-                                this.setState({
-                                    showTopicModal: false,
+                                this.setState({ 
+                                    showTopicModal: false, 
                                     message: "You successfully set topics for ",
                                     topics: [],
-                                    checked: {}
+                                    checked: {} 
                                 });
                             }}
                         >
@@ -198,7 +198,7 @@ class QuestionForm extends React.Component {
                                                                     onChange={this.updateTopic}
                                                                     checked={this.state.checked[topic._id]}
                                                                 />
-                                                                <img className="topic-modal-icon" src={topic.imageUrl} alt="" />
+                                                                <img className="topic-modal-icon" src={topic.imageUrl} />
                                                                 <label for={topic.name}>{topic.name}</label>
                                                             </div>
                                                         )
@@ -298,7 +298,7 @@ class QuestionForm extends React.Component {
                                                 return (
                                                     <div className="add-question-modal-user">
 
-                                                        <ProfileIcon
+                                                        <ProfileIcon 
                                                             size={30}
                                                             profileUrl={data.currentUser.profileUrl}
                                                             fsize={15}
@@ -363,7 +363,7 @@ class QuestionForm extends React.Component {
                 {
                     // otherwise if a div is specified, the div gets rendered
                     this.props.div &&
-                    <AddQuestionDiv handleModal={this.handleModal} />
+                    <AddQuestionDiv handleModal={this.handleModal}/>
                 }
                 {this.state.showModal && button}
                 {

@@ -1,11 +1,9 @@
-import React, { Fragment } from 'react';
-import ReactDom from 'react-dom';
+import React from 'react';
 import { Mutation, Query } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
-import ProfileIcon from "../customization/ProfileIcon";
 const { NEW_COMMENT } = Mutations;
-const { CURRENT_USER, FETCH_QUESTION } = Queries;
+const { FETCH_COMMENTS, CURRENT_USER, FETCH_QUESTION } = Queries;
 
 class CommentForm extends React.Component {
 	constructor(props) {
@@ -13,25 +11,11 @@ class CommentForm extends React.Component {
 		this.state = {
 			answerId: this.props.answerId,
 			comment: "",
-			history: this.props.history,
-			showForm: this.props.showForm,
-			showCommentForm: this.props.showCommentForm,
-			showCommentButton: false,
-		};
+			bold: false,
+			italic: false,
+			history: this.props.history
+		}
 		this.update = this.update.bind(this);
-		this.closeCommentForm = this.closeCommentForm.bind(this);
-		this.showButton = this.showButton.bind(this);
-		this.hideButton = this.hideButton.bind(this);
-	}
-
-	componentDidMount() {
-			const input = document.getElementById('comment-input');
-			input.addEventListener('click', this.showButton);
-	}
-
-	componentWillUnmount() {
-		const input = document.getElementById('comment-input');
-		input.removeEventListener('click', this.showButton);
 	}
 
 	update(field) {
@@ -67,6 +51,19 @@ class CommentForm extends React.Component {
 		}
 	}
 
+	// updateState(comment)
+	// {
+	// 	return () => this.setState({
+	// 		comment: comment.comment,
+	// 	})
+	// }
+
+	// updateComment() {
+	// 	return e => {
+	// 		this.setState({ comment: e.target.value })
+	// 	}
+	// }
+
 	handleSubmit(e, newComment) {
 		e.preventDefault();
 		const comment = this.state.comment;
@@ -77,92 +74,62 @@ class CommentForm extends React.Component {
 			}
 		})
 			.then(() => {
-				this.closeCommentForm();
+				// this.props.history.push(`/q/${this.state.questionId}`)
 			})
 	}
 
-	closeCommentForm() {
-		this.setState({showCommentForm: false, showCommentButton: false});
+	format(type) {
+		return e => {
+			e.preventDefault();
+			e.stopPropagation();
+			document.execCommand(type, false, null);
+			this.setState({ [type]: document.queryCommandState(type) });
+		}
 	}
 
-	showButton(e) {
-		e.preventDefault();
-		console.log("show button does not work");
-		this.setState({ showCommentButton: true });
-	}
-
-	hideButton() {
-		const button = document.getElementById("comment-submit-button");
-		this.setState({ showCommentButton: false });
-		button.styling.display = "inline-block";
-
-		// if (button.style.display === "inline-block") {
-		// 	button.styling.display = "none";
-		// } else {
-		// 	button.styling.display = "none";
-		// }
+	loginAndRedirectTo(url, data) {
+		this.props.history.push(url);
 	}
 
 	render() {
-		const button = (
-			<Fragment>
-			<div className="comment-form-button">
-				<input type="submit" className="comment-form-button" id="comment-submit-button" value="Add Comment" />
-			</div>
-			</Fragment>
-		)
-
+		const { bold, italic } = this.state;
 		return (
 			<Mutation
 				mutation={NEW_COMMENT}
-				update={(cache, data) => {this.updateCache(cache, data)}}
+				update={(cache, data) => this.updateCache(cache, data)}
 				onCompleted={data => {
-					// this.props.closeCommentForm();
-					this.setState({comment: "", showCommentForm: false, showCommentButton: false});
+					const { comment } = data.newComment;
+					// this.props.history.push(`c/${this.state.questionId}`)
+					// this.loginAndRedirectTo("/", data)
+
 				}}
 			>
 				{(newComment, { comment }) => {
+					// const { user } = this.props;
 					return (
 						<div className="comment-form-container">
 							<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
-								<div className="comment-item-user-icon">
-									<Query query={CURRENT_USER} variables={{token : localStorage.getItem("auth-token") }}>
-										{({loading, error, data}) => {
-											if (loading) return null;
-											if (error) return null;
-											if (data.currentUser.profileUrl) {
-												return (
-												<Fragment>
-													<ProfileIcon 
-														profileUrl={data.currentUser.profileUrl}
-														fname={data.currentUser.fname}
-														size={40}
-														fsize={18}
-													/>
-												</Fragment>
-												)
-											}
-										}}
-									</Query>
+								<div className="comment-form-user-icon">
+									{/* <img className="comment-item-user-icon" src={user.profileUrl} /> */}
 								</div>
-								<div className="comment-form-input-box" 
-									// id="comment-input"
-									>
-									<textarea
+								{/* <div className="comment-form-input-box"> */}
+								<div className="comment-form-input-box">
+									<input
 										onChange={this.update("comment")}
 										value={this.state.comment}
 										placeholder="Add a comment..."
 										className="comment-form-input"
-										id="comment-input"
-										// onClick={console.log("on focus")}
 									/>
 								</div>
-								{/* {this.showCommentButton ? button : null } */}
-								{button}
+								<div className="comment-form-button">
+									<input type="submit" className="comment-form-button" value="" />
+								</div>
+
 							</form>
 						</div>
 					)
 				}}
+
 			</Mutation>
 		)
 	}

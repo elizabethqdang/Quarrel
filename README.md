@@ -54,6 +54,10 @@ Answer icon
 Spaces icon (optional)
   - opens dropdown of followed spaces as well
   - also contains a link to see all spaces ("/spaces)
+Notification
+  -links to notification page "/notification"
+  -shows posts from spaces
+  **i'm assuming also shows info about asked questions and upvotes
 Searchbar Component
   -selecting opens modal
   -typing autofills/suggest topics/spaces

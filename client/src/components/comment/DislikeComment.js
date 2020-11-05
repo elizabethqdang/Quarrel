@@ -1,10 +1,9 @@
 import React from "react";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
-import { Mutation } from "react-apollo";
-import { FaArrowUp } from "react-icons/fa";
+import { Mutation, Query } from "react-apollo";
 const { DISLIKE_COMMENT, DELETE_DISLIKE } = Mutations;
-const { FETCH_QUESTION } = Queries;
+const { FETCH_QUESTION, CURRENT_USER } = Queries;
 
 class DislikeComment extends React.Component {
 	constructor(props) {
@@ -49,23 +48,41 @@ class DislikeComment extends React.Component {
 		const userIds = this.props.comment.dislikes.map(dislike => {
 			return dislike.user._id;
 		})
+		const { comment } = this.props;
 
 		if (userIds.includes(localStorage.getItem("currentUserId"))) {
 			return (
 				<div className="">
+					<Query 
+						query={CURRENT_USER} 
+						variables={{ token: localStorage.getItem("auth-token") }}
+					>
+						{ ({ loading, error, data }) => {
+							if (loading) return "Loading...";
+							if (error) return `Error! ${error.message}`
+							return (
+								<div className="comment-disliked">
+									<div className="comment-item-icon"><i class="fas fa-poo"></i></div>
+									<div className="comment-disliked-text">Poo'ed {this.props.comment.dislikes.length} </div> 
+
+								</div>
+							)
+						}}
+					</Query>
+
 					<Mutation
 						mutation={DELETE_DISLIKE}
 						onError={err => this.setState({ message: err.message })}
 						update={(cache, data) => this.updateCache(cache, data)}
 						onCompleted={data => {
-							// const { answer } = data.deleteDislike;
+							const { answer } = data.deleteDislike;
 							this.setState({ message: "" });
 						}}
 					>
 						{(deleteDislike, { data }) => (
-							<div className="comment-disliked" onClick={e => this.handleUndislike(e, deleteDislike)}>
-								<div className="comment-item-icon"><FaArrowUp /></div>
-								<div className="comment-disliked-text">Upvote {this.props.comment.dislikes.length}</div>
+							<div className="comment-dislike" onClick={e => this.handleUndislike(e, deleteDislike)}>
+								<div className="comment-item-icon"><i className="fas fa-poo"></i></div>
+								<div className="comment-item-text">Poos {this.props.comment.dislikes.length}</div>
 							</div>
 						)}
 					</Mutation>
@@ -79,13 +96,14 @@ class DislikeComment extends React.Component {
 						onError={err => this.setState({ message: err.message })}
 						update={(cache, data) => this.updateCache(cache, data)}
 						onCompleted={data => {
-							// const {answer} = data.dislikeComment;
+							const {answer} = data.dislikeComment;
+							// this.setState({ message: "Disliked" });
 						}}
 					>
 						{(dislikeComment, { data }) => (
 							<div className="comment-dislike" onClick={e => this.handleDislike(e, dislikeComment)}>
-								<div className="comment-item-icon"><FaArrowUp /></div>
-								<div className="comment-item-text">Upvote {this.props.comment.dislikes.length}</div>
+								<div className="comment-item-icon"><i className="fas fa-poo"></i></div>
+								<div className="comment-item-text">Poos {this.props.comment.dislikes.length}</div>
 								
 							</div>
 						)}

@@ -1,18 +1,17 @@
 import React from "react";
-// import { Query } from "react-apollo";
+import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
-// import Queries from "../../graphql/queries";
-import Feed from "../main/feed";
-// const { UNANSWERED_QUESTIONS } = Queries;
+import Queries from "../../graphql/queries";
+const { UNANSWERED_QUESTIONS } = Queries;
 
 class QuestionsForYou extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
+    constructor(props) {
+        super(props);
+    }
 
     render() {
         return (
-            <div className="answers-tab-results">
+            <div className="search-results">
                 <div className="answers-tab-header">
                     <div className="answer-tab selected left-tab">
                         <Link to="/answer">Questions for you</Link>
@@ -21,7 +20,7 @@ class QuestionsForYou extends React.Component {
                         <Link to="/answered">Questions you answered</Link>
                     </div>
                 </div>
-                {/* <ul className="search-results-list">
+                <ul className="search-results-list">
                     <Query query={UNANSWERED_QUESTIONS} >
                         {({ loading, error, data }) => {
                             if (loading) return "loading...";
@@ -38,8 +37,7 @@ class QuestionsForYou extends React.Component {
                             })
                         }}
                     </Query>
-                </ul> */}
-                <Feed noAnswerYet={true} />
+                </ul>
             </div>
         )
     }

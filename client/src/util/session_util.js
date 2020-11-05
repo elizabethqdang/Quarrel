@@ -1,7 +1,3 @@
-export const stripGraphQLPrefix = str => {
-	return str.replace("GraphQL error: Error: ", "");
-}
-
 export const saveUserToCache = (client, userInfo) =>
 {
 	const { loggedIn, _id, email } = userInfo;

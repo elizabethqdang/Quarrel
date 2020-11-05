@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLNonNull, GraphQLID, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLNonNull, GraphQLID } = graphql;
 const mongoose = require("mongoose");
 const AuthService = require("../services/auth");
 const UserType = require("./types/user_type");
@@ -167,16 +167,6 @@ const mutation = new GraphQLObjectType({
                 return Question.addTopic(questionId, topicId).then(
                     Topic.addQuestion(questionId, topicId)
                 )
-            }
-        },
-        addTopicsToQuestion: {
-            type: QuestionType,
-            args: {
-                topics: { type: new GraphQLList(GraphQLID) },
-                questionId: { type: GraphQLID }
-            },
-            async resolve(parentValue, { topics, questionId }, ctx) {
-                return Question.addTopics(questionId, topics)
             }
         },
         trackQuestion: {

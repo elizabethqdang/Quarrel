@@ -6,19 +6,13 @@ import AnswerItem from "../answer/AnswerItem";
 const { ANSWERS_BY_USER } = Queries;
 
 class QuestionsYouAnswered extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-
-    removeHTMLTags(str) {
-        const pattern = /<.*?>|&nbsp;/;
-        str = str.split(pattern).join(" ");
-        return str;
+    constructor(props) {
+        super(props);
     }
 
     render() {
         return (
-            <div className="answers-tab-results">
+            <div className="search-results">
                 <div className="answers-tab-header">
                     <div className="answer-tab unselected left-tab">
                         <Link to="/answer">Questions for you</Link>
@@ -27,30 +21,33 @@ class QuestionsYouAnswered extends React.Component {
                         <Link to="/answered">Questions you answered</Link>
                     </div>
                 </div>
-                <ul className="feed-container">
+                <ul className="search-results-list">
                     <Query query={ANSWERS_BY_USER} variables={{ userId: localStorage.getItem("currentUserId") }}>
                         {({ loading, error, data }) => {
-                            if (loading) return "Loading...";
+                            if (loading) return "loading...";
                             if (error) return `Error! ${error.message}`;
-                            if (data.answersByUser.length === 0) return <li key={0} id="no-results" className="feed-item">You haven't answered any questions yet.</li>;
+                            if (data.answersByUser.length === 0) return <li key={0} id="no-results">You haven't answered any questions yet.</li>;
                             return data.answersByUser.map(match => {
                                 return (
-                                    <li key={match.question._id} className="questions-you-answered-item">
-                                        <Link to={`/q/${match.question._id}`}>
-                                            <div className="answers-tab-question">{match.question.question}</div>
-                                        </Link>
-                                        <AnswerItem
-                                            key={match._id}
-                                            answer={match}
-                                            questionId={match.question._id}
-                                        />
-                                    </li>
+                                    <Link to={`/q/${match.question._id}`}>
+                                        <li key={match.question._id}>
+                                            <div className="search-results-match">{match.question.question}</div>
+                                            <div className="search-results-answers-number my-answer">
+                                                <div>{match.body}</div>
+                                                <div>Upvotes: {match.upvotes.length}</div>
+                                            </div>
+                                            {/* <AnswerItem
+                                                key={match._id}
+                                                answer={match}
+                                                questionId={match.question._id}
+                                            /> */}
+                                        </li>
+                                    </Link>
                                 )
                             })
                         }}
                     </Query>
                 </ul>
-                {/* <Feed /> */}
             </div>
         )
     }

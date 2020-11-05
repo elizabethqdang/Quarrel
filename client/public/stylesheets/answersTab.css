@@ -1,12 +1,7 @@
-.answers-tab-results {
-    margin-top: 30px;
-}
-
 .answers-tab-header {
     display: flex;
     border-bottom: 1px solid #e2e2e2;
     height: 40px;
-    background-color: white;
 }
 
 .answer-tab {
@@ -23,31 +18,4 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-}
-
-.answers-tab-question {
-    color: #333333;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.answers-tab-question:hover {
-    text-decoration: underline;
-}
-
-.answers-tab-list li {
-    padding: 16px;
-    margin-bottom: 10px;
-    background: white;
-}
-
-.questions-you-answered-item {
-    background: white;
-    padding: 16px 16px 0px;
-    border: 1px solid rgb(222, 224, 225);
-    border-radius: 3px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 2px -2px rgb(222, 224, 225);
-    display: flex;
-    flex-direction: column;
 }

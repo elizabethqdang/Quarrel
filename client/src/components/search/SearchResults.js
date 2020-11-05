@@ -5,11 +5,11 @@ import Queries from "../../graphql/queries";
 const { SIMILAR_QUESTIONS, SEARCH_TOPICS } = Queries;
 
 class SearchResults extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
+    constructor(props) {
+        super(props);
+    }
 
-    render() {
+    render () {
         const query = this.props.match.params.query.split("-").join(" ")
         return (
             <div className="search-results">
@@ -34,9 +34,9 @@ class SearchResults extends React.Component {
                             })
                         }}
                     </Query>
-
+                    
                     <Query query={SEARCH_TOPICS} variables={{ query: query }}>
-                        {({ loading, error, data }) => {
+                        {({loading, error, data}) => {
                             if (loading) return "loading...";
                             if (error) return `Error! ${error.message}`;
                             return data.searchTopics.map(match => {
@@ -45,7 +45,7 @@ class SearchResults extends React.Component {
                                         <li key={match._id}>
                                             <div className="search-results-match">
                                                 <div>
-                                                    <img className="search-results-topic-image" src={match.imageUrl} alt="" />
+                                                    <img className="search-results-topic-image" src={match.imageUrl} />
                                                 </div>
                                                 <div className="search-results-topic-name">
                                                     <span>Topic: </span>{match.name}

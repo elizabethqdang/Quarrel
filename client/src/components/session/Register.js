@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo';
 import Mutations from "../../graphql/mutations";
 import { withRouter } from "react-router-dom";
+// import * as SessionUtil from "../../util/session_util";
 
 const { REGISTER_USER } = Mutations;
 
@@ -16,27 +17,18 @@ class Register extends React.Component {
 			errors: [],
 		};
 		this.renderErrors = this.renderErrors.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.closeMessage = this.closeMessage.bind(this);
 	}
 
 	update(field) {
 		return e => this.setState({ [field]: e.target.value });
 	}
 
-	closeMessage(e) {
-		let errorArray = []
-		this.setState({ errors: errorArray });
-	}
-
 	renderErrors(errors) {
-		if (!errors) return null;
 		let errorArray = errors.map((error) => (
 			error.message
 		))
 		this.setState({ errors: errorArray })
-		setTimeout(this.closeMessage, 5001)
-		// console.log(errorArray)
+		console.log(errorArray)
 	}
 
 	updateCache(client, { data }) {
@@ -48,6 +40,8 @@ class Register extends React.Component {
 
 	handleSubmit(e, registerUser) {
 		e.preventDefault();
+		// const email = this.state.email;
+		// const password = this.state.password;
 		registerUser({
 			variables: {
 				fname: this.state.fname,
@@ -59,18 +53,14 @@ class Register extends React.Component {
 	}
 
 	render() {
-		const registerErrors = (
-			<div className="login-error">
-				{this.state.errors}
-			</div>
-		)
-
+		// console.log(this.state.errors);
 		return (
 			<Mutation
 				mutation={REGISTER_USER}
 				onError={err => this.renderErrors(err.graphQLErrors)}
+				// {console.log(err.graphQLErrors)}}
 				update={(client, cache, data) => this.updateCache(client, cache, data)}
-				onCompleted={data => {
+				onCompleted={ data => {
 					const { token } = data.register;
 					localStorage.setItem("auth-token", token);
 					localStorage.setItem("currentUserId", data.register._id)
@@ -79,16 +69,21 @@ class Register extends React.Component {
 						message: `New user created successfully`
 					});
 				}}
-				//duplicate pro warning
 				update={(client, data) => this.updateCache(client, data)}
 			>
 
 				{registerUser => (
 					<div className="">
-						{/* <div className="register-error hide-me">
-							{this.state.errors}
+						<div className="errorMsg">
+							{this.state.errors[0]}
+						</div>
+						{/* <div>{this.state.errors.map(error =>
+						{
+							return (
+								<li key={error}>{error}</li>
+							);
+						})}
 						</div> */}
-						{this.state.errors.length > 0 ? registerErrors : null}
 
 						<form onSubmit={e => this.handleSubmit(e, registerUser, this.props.history)} className="signup-form-box">
 							<p className="session-label">Signup</p>
@@ -127,6 +122,7 @@ class Register extends React.Component {
 								/>
 							</div>
 							<br />
+							{/* <a>Cancel</a> */}
 							<button type="submit" className="form-button">
 								Sign up
 							</button>

@@ -4,10 +4,10 @@ import Queries from "../../graphql/queries";
 import FeedItem from "./feed_item";
 const { FETCH_QUESTIONS } = Queries;
 
-class Feed extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
+class Feed extends React.Component { 
+    constructor(props) {
+        super(props);
+    }
 
     render() {
         return (
@@ -20,7 +20,7 @@ class Feed extends React.Component {
                         if (error) return `Error! ${error.message}`;
                         return (
                             data.questions.map(question => {
-                                return <FeedItem key={question._id} question={question} noAnswerYet={this.props.noAnswerYet} />
+                                return <FeedItem key={question._id} question={question} />
                             })
                         )
                     }}

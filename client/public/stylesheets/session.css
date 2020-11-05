@@ -40,7 +40,7 @@
   left: 0;
   right: 0;
   margin: auto;
-  top: 20%;
+  top: 10%;
 	text-align: center;
 }
 
@@ -118,41 +118,4 @@ label {
 	position: absolute;
 	top: 0;
 	color: black;
-}
-
-
-
-
-.login-error {
-  background: #5b6770;
-  color: #fff;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-	left: 0;
-	height: 50px;
-	opacity: 90%;
-	display: flex;
-	justify-content: center;
-}
-.register-error {
-  background: #5b6770;
-  color: #fff;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 50%;
-	left: 0;
-	opacity: 90%;
-	height: 50px;
-	display: flex;
-	justify-content: center;
-}
-
-.register-error > p, login-error > p {
-	vertical-align: middle;
-	justify-content: center;
 }

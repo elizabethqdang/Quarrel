@@ -128,20 +128,11 @@
 .topics-list-container {
   display: flex;
   margin-top: 20px;
-  padding-bottom: 8px;
-  background: white;
-  max-width: 640px;
 }
 
 .topics-list-item {
   background: #f7f7f7;
-  color: #666666;
   padding: 4px 6px;
   border-radius: 4px;
   font-size: 13px;
-  overflow: wrap;
-}
-
-.topics-list-item:hover {
-color: #2b6dad;
 }

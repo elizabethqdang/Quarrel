@@ -1,9 +1,9 @@
 import React from 'react';
 
 class ProfileIcon extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
+    constructor(props) {
+        super(props);
+    }
 
     //fields are: profileUrl, size, fsize, and fname
     //option: cn is className
@@ -32,7 +32,7 @@ class ProfileIcon extends React.Component {
             </div>
         )
         const imgIcon = (
-            <img className={cn} src={profileUrl} alt=""
+            <img className={cn} src={profileUrl}
                 style={{
                     height: `${size}px`,
                     width: `${size}px`,
@@ -40,8 +40,8 @@ class ProfileIcon extends React.Component {
                 }}
             ></img>
         );
-
-        const decide = (profileUrl.slice(0, 4) === 'http');
+        
+        const decide = (profileUrl.slice(0,4) === 'http');
 
         return decide ? imgIcon : defaultIcon;
     }

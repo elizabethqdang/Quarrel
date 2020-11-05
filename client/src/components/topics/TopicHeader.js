@@ -101,7 +101,7 @@ class TopicHeader extends React.Component {
             <Link to={`/topic/${this.state.name}/questions`} key={this.props.topic._id} >
               <div className="TopicPhoto">
                 <div className="topic_photo_img">
-                  <img className="icon" src={this.renderImg()} alt=""></img>
+                  <img className="icon" src={this.renderImg()}></img>
                 </div>
               </div>
             </Link>
@@ -138,11 +138,11 @@ class TopicHeader extends React.Component {
                       </Mutation>
                     </span>
                   </div>
-                  {/* <div className="topic_item bookmark">
+                  <div className="topic_item bookmark">
                     <span>
                       <a className="ui_button-inner">
                         <div className="ui_button_icon_wrapper flex">
-                          <div id="bookmark-icon">
+                          {/* <div id="bookmark-icon">
                               <span className="ui_button_icon">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                   <g id="bookmark" className="icon_svg-stroke icon_svg-fill" stroke="#666" fill="none" strokeWidth="1.5" fillRule="evenodd" strokeLinejoin="round">
@@ -150,14 +150,14 @@ class TopicHeader extends React.Component {
                                   </g>
                                 </svg>
                               </span>
-                          </div>
-                          <div className="ui_button_label">
+                          </div> */}
+                          {/* <div className="ui_button_label">
                               <span className="ui_button_label">Bookmark</span>
-                            </div>
+                            </div> */}
                         </div>
                       </a>
                     </span>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>

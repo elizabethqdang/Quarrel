@@ -1,8 +1,10 @@
 node_modules
-/config/keys.js
-/config2/keys_prod.js
-/config2/keys_dev.js
+config
+config2
+keys_dev.js
 Dockerfile
 docker-compose.yml
 Dockerfile.web
 .env
+config2
+config

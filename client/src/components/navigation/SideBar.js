@@ -24,7 +24,7 @@ class SideBar extends React.Component {
                                         return (
                                             <div key={topic._id} className="Link-container">
                                                 <Link className="sidebar-link" to={`/topic/${topic.name}`} key={topic._id} topic={topic}>
-                                                    <img className="sidebar-icon" src={topic.imageUrl} alt=""></img>
+                                                    <img className="sidebar-icon" src={topic.imageUrl}></img>
                                                     <div className="sidebar-icon-label">{topic.name}</div>
                                                 </Link>
                                             </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import AuthRoute from "../util/route_util";
 import NavBar from "./navigation/NavBar";
 import QuestionShow from "./questions/QuestionShow";
 import RelatedQuestions from "./questions/relatedQuestions";

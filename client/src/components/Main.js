@@ -1,11 +1,17 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+// import AuthRoute from "../util/route_util";
 import NavBar from "./navigation/NavBar";
+import Feed from "./main/feed";
+// import Login from "./session/Login";
+// import Register from "./session/Register";
+// import QuestionForm from "./questions/QuestionForm";
 import TopicsShow from "./topics/TopicsShow"
 import TopicShow from "./topics/TopicShow"
 import TopicQuestions from "./topics/TopicQuestions"
 import SideBar from "./navigation/SideBar"
 import RightSideBar from "./navigation/RightSideBar";
+import QuestionShow from "./questions/QuestionShow";
 import SearchResults from "./search/SearchResults";
 import QuestionsForYou from "./answers_tab/questionsForYou";
 import QuestionsYouAnswered from "./answers_tab/questionsYouAnswered";

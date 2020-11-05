@@ -13,13 +13,9 @@ class Login extends React.Component {
 			email: "",
 			password: "",
 			errors: [],
-			showErrorModal: false,
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.demoLogin = this.demoLogin.bind(this);
-		this.closeMessage = this.closeMessage.bind(this);
-		this.renderErrors = this.renderErrors.bind(this);
-		this.handleErrorModal = this.handleErrorModal.bind(this);
 	}
 
 	update(field) {
@@ -43,13 +39,7 @@ class Login extends React.Component {
 		return e => {
 			e.preventDefault();
 			Mutation({ variables });
-			this.handleErrorModal(e);
 		};
-	}
-
-	handleErrorModal(e) {
-		e.preventDefault();
-		this.setState({ showErrorModal: !this.showErrorModal })
 	}
 	// handleSubmit(e, loginUser) {
 	// 	e.preventDefault();
@@ -71,31 +61,17 @@ class Login extends React.Component {
 		})
 	}
 
-	closeMessage(e) {
-		let errorArray = []
-		this.setState({ errors: errorArray });
-	}
-
 	renderErrors(errors) {
 		if (!errors) return null;
 		let errorArray = errors.map((error) => (
 			error.message
 		))
 		this.setState({ errors: errorArray })
-		setTimeout(this.closeMessage, 5001)
-		// console.log(errorArray)
+		console.log(errorArray)
 	}
 
 	render() {
-		const loginErrors = (
-			<div className="login-error">
-				{/* {this.state.errors[0]} */}
-				{this.state.errors}
-			</div>
-		)
-
 		const { email, password } = this.state;
-		
 		return (
 			<Mutation
 				mutation={LOGIN_USER}
@@ -110,10 +86,9 @@ class Login extends React.Component {
 			>
 				{loginUser => (
 					<div>
-						{/* <div className="login-error">
-							{this.state.errors}
-						</div> */}
-						{this.state.errors.length > 0 ? loginErrors : null}
+						<div className="errorMsg">
+							{this.state.errors[0]}
+						</div>
 						<div className="login-form-box">
 							<label className="session-label">Login</label>
 							<form

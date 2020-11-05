@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { Query } from "react-apollo";
 import Queries from "../graphql/queries";
+import SessionForm from "../components/session/SessionForm";
 const { IS_LOGGED_IN } = Queries;
 
 const AuthRoute = ({
@@ -19,7 +20,7 @@ const AuthRoute = ({
                             path={path}
                             exact={exact}
                             render={props =>
-                                !data.isLoggedIn ? <Component {...props} /> : <Redirect to="/" />
+															!data.isLoggedIn ? <Component {...props} />: <Redirect to="/" />
                             }
                         />
                     );
@@ -31,7 +32,7 @@ const AuthRoute = ({
                                 data.isLoggedIn ? (
                                     <Component {...props} />
                                 ) : (
-                                        <Redirect to="/session" />
+																		<Redirect to="/session"/>
                                     )
                             }
                         />

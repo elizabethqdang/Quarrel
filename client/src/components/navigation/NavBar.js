@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Queries from "../../graphql/queries";
-import { Query } from "react-apollo"
+import { ApolloConsumer, Query } from "react-apollo"
 import SearchBar from "./SearchBar";
 import QuestionForm from "../questions/QuestionForm";
-
+import * as SessionUtil from "../../util/session_util";
+import SigninButton from "./SigninButton";
+import ProfileUpload from "./ProfileUpload";
 import ProfileIcon from "../customization/ProfileIcon";
 import OptionsMenu from "./OptionsMenu";
 import ReactDOM from "react-dom";
-const { CURRENT_USER } = Queries;
+const { IS_LOGGED_IN, CURRENT_USER } = Queries;
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -32,11 +34,11 @@ class NavBar extends React.Component {
     componentWillMount() {
         document.addEventListener('mousedown', this.handleClick, false);
     }
-
+    
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClick, false);
     }
-
+    
     logout(client) {
         return (
             <div>
@@ -55,7 +57,7 @@ class NavBar extends React.Component {
         )
     }
 
-    handleModal(e) {
+    handleModal (e) {
         e.preventDefault();
         this.setState({ showModal: !this.state.showModal });
     }
@@ -72,11 +74,11 @@ class NavBar extends React.Component {
 
     toggleOptions(e) {
         e.stopPropagation();
-        if (!this.state.showModal) this.setState({ showOptions: !this.state.showOptions });
+        if (!this.state.showModal) this.setState({showOptions: !this.state.showOptions});
     }
 
     closeOptions() {
-        this.setState({ showOptions: false });
+        this.setState({showOptions: false});
     }
 
     handleClick(e) {
@@ -121,44 +123,44 @@ class NavBar extends React.Component {
                             <span>Notifications</span>
                         </li>
                     </ul>
-                    <SearchBar
-                        openModal={this.openModal}
-                        closeModal={this.closeModal}
-                        showModal={this.state.showModal}
+                    <SearchBar 
+                        openModal={this.openModal} 
+                        closeModal={this.closeModal} 
+                        showModal={this.state.showModal} 
                         searchFocus={this.state.searchFocus}
                     />
-
-                    <Query
+    
+                    <Query 
                         query={CURRENT_USER}
                         variables={{ token: token }}
                     >
-                        {({ loading, error, data }) => {
-                            if (loading) return null;
-                            if (error) return null;
-                            if (data.currentUser.profileUrl) {
-                                return (
-                                    <div className="nav-relative">
-                                        <div className="nav-usericon"
-                                            onClick={this.toggleOptions}>
-                                            <ProfileIcon
-                                                profileUrl={data.currentUser.profileUrl}
-                                                fname={data.currentUser.fname}
-                                                size={24}
-                                                fsize={12}
-                                            />
-                                        </div>
-                                        {this.state.showOptions && !this.state.showModal ? <div className="nav-options-menu">
-                                            <OptionsMenu closeOptions={this.closeOptions} />
-                                        </div> : null}
-                                    </div>
-                                )
+                       {({loading, error, data}) => {
+                           if (loading) return null;
+                           if (error) return null;
+                           if (data.currentUser.profileUrl) {
+                               return (
+                            <div className="nav-relative">
+                               <div className="nav-usericon"
+                                onClick={this.toggleOptions}>
+                                   <ProfileIcon
+                                     profileUrl={data.currentUser.profileUrl}
+                                     fname={data.currentUser.fname}
+                                     size={24}
+                                     fsize={12}  
+                                     />
+                            </div> 
+                                       {this.state.showOptions && !this.state.showModal ? <div className="nav-options-menu">
+                                           <OptionsMenu closeOptions={this.closeOptions} />
+                                       </div> : null}
+                                </div>
+                               )
                             }
-                        }}
+                       }}
                     </Query>
 
-
-                    <QuestionForm closeSearchModal={this.closeModal} button={true} />
-                    {/* <SigninButton /> */}
+    
+                    <QuestionForm closeSearchModal={this.closeModal} button={true}/>
+					{/* <SigninButton /> */}
                     {/* <ProfileUpload /> */}
                 </div>
                 {this.state.showModal && <div className="search-modal-background" onClick={this.closeModal}></div>}
